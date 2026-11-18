@@ -185,12 +185,24 @@ function assertFusionResponse(response, operation) {
   throw error;
 }
 
+// function readProcessId(data) {
+//   return (
+//     data?.SetupTaskCSVExportProcess?.[0]?.ProcessId ||
+//     data?.ProcessId
+//   );
+// }
+
+
 function readProcessId(data) {
   return (
+    data?.SetupTaskCSVExportProcess?.items?.[0]?.ProcessId ||
     data?.SetupTaskCSVExportProcess?.[0]?.ProcessId ||
-    data?.ProcessId
+    data?.ProcessId ||
+    data?.items?.[0]?.ProcessId ||
+    null
   );
 }
+
 
 function normalizeStatus(value) {
   return String(value || "").trim().toUpperCase();
