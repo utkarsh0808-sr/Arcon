@@ -31,9 +31,19 @@ async function verifyApprovedFirebaseUser(idToken) {
   }
   let decoded;
   try { decoded = await firebaseAdmin.auth().verifyIdToken(idToken, true); }
-  catch (cause) {
-    const error = new Error("Your Firebase session is invalid or expired. Please sign in again."); error.status = 401; error.cause = cause; throw error;
-  }
+catch (cause) {
+  console.error("[Firebase token verification failed]", {
+    code: cause.code,
+    message: cause.message,
+  });
+
+  const error = new Error(
+    "Your Firebase session is invalid or expired. Please sign in again."
+  );
+  error.status = 401;
+  error.cause = cause;
+  throw error;
+}
   const email = String(decoded.email || "").trim().toLowerCase();
   if (!email || decoded.email_verified !== true) {
     const error = new Error("Verify your email address before accessing ArConfig."); error.status = 403; throw error;
