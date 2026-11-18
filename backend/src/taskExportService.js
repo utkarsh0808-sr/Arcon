@@ -168,6 +168,9 @@ async function startTaskExport(client, task) {
   );
 
   let processId = readProcessId(response.data);
+  logger.info(
+  `Oracle export creation response for ${task.name}: ${JSON.stringify(response.data).slice(0, 2000)}`
+);
   if (processId) return processId;
 
   if (response.data?.ExportSupportedFlag === "N") {
