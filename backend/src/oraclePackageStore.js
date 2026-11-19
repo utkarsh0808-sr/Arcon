@@ -2,8 +2,11 @@ const crypto = require("crypto");
 const fs = require("fs/promises");
 const path = require("path");
 
-const PACKAGE_DIRECTORY = path.join(__dirname, "..", "output", "oracle-packages");
-
+// const PACKAGE_DIRECTORY = path.join(__dirname, "..", "output", "oracle-packages");
+const PACKAGE_DIRECTORY = path.resolve(
+  process.env.ORACLE_PACKAGE_DIR ||
+  path.join(__dirname, "..", "output", "oracle-packages")
+);
 function safePart(value) {
   return String(value || "TASK").replace(/[^a-z0-9_-]+/gi, "_").replace(/^_+|_+$/g, "").slice(0, 80) || "TASK";
 }
