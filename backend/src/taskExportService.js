@@ -389,10 +389,10 @@ async function pollTaskExport(client, cfg, task, processId) {
       );
     }
 
-    if (
-      COMPLETED_STATUSES.has(normalizedResultStatus) &&
-      (lastCompletedFlag === "Y" || lastCompletedFlag === "")
-    ) {
+   if (
+  COMPLETED_STATUSES.has(normalizedResultStatus) &&
+  ["Y", "TRUE", "1", ""].includes(lastCompletedFlag)
+){
       logger.info(
         `Oracle export completed for ${task.name}. ` +
         `Process ID: ${processId}`
